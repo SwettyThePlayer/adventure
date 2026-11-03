@@ -1,3 +1,5 @@
+import random
+
 hp = 10
 money = 0
 
@@ -12,9 +14,17 @@ while hp > 0 and gold < 15:
     action = input("explore / rest: ").lower().strip()
 
     if action == "explore":
-        print("You find 2 bucks.")
-        money = money + 2
-        hp = hp - 1
+        event = random.choice(["squirrel", "money", "nothing"])
+        if event == "monster":
+            damage = random.randint(1, 4)
+            hp = hp - damage
+            print(f"A crazy squirrel attacks you! You lose {damage} health.")
+        elif event == "money":
+            found = random.randint(1,3)
+            money = money + found
+            print(f"You found {found} bucks!")
+        else:
+            print("Just an empty room. Spooky.")
     elif action == "rest":
         print("You rest. +1 health.")
         hp = hp + 1
