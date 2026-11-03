@@ -9,10 +9,10 @@ print("Find 15 bucks to escape.")
 
 door = input("Which door? (left/middle/right) ").lower().strip()
 
-while hp > 0 and gold < 15:
+while hp > 0 and money < 15:
     print()
     print(f"Health: {hp} | Money: {money} | Bag: {inventory}")
-    action = input("explore / rest: ").lower().strip()
+    action = input("explore / rest / shop / quit : ").lower().strip()
 
     if action == "explore":
         event = random.choice(["squirrel", "money", "item", "nothing"])
@@ -35,12 +35,32 @@ while hp > 0 and gold < 15:
             print("Just an empty room. Spooky.")
     elif action == "rest":
         if "brew" in inventory:
-            inventory.remove("brew")
-            hp = hp + 5
-            print("You drink the brew. +5 hp.")
+            decision = input("Do you want to drink the brew? (yes/no) ")
+            if decision == "yes":
+                inventory.remove("brew")
+                hp = hp + 5
+                print("You drink the brew. +5 hp.")
+            elif decision == "no":
+                print("You didn't drink it this time.")
+            else:
+                print("You can't do that here.")
         else:
             print("You rest. +1 health.")
             hp = hp + 1
+    elif action == "shop":
+        shopitem = random.choice(["axe", "brew"])
+        price = random.randint(1, 5)
+        print("Hello, Player!")
+        print(f"The shop today has: {shopitem} for {price} bucks.")
+        buy = input("Do you buy it? (yes/no) ")
+        if buy == "yes":
+            print(f"You bought the brew. -{price} bucks.")
+            money = money - price
+            inventory.append(shopitem)
+        elif buy == "no":
+            print("You didn't take it.")
+        else:
+            print("You can't do that here.")
     elif action == "quit":
         print("You give up and sit in the cold, dark corner...")
         break
